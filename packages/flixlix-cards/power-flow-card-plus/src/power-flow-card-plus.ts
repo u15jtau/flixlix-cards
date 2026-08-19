@@ -2,6 +2,7 @@ import { batteryElement } from "@flixlix-cards/shared/components/battery";
 import { flowElement } from "@flixlix-cards/shared/components/flows/index";
 import { gridElement } from "@flixlix-cards/shared/components/grid";
 import { homeElement } from "@flixlix-cards/shared/components/home";
+import { individualDeviceArea } from "@flixlix-cards/shared/components/individual-device-area";
 import { individualLeftBottomElement } from "@flixlix-cards/shared/components/individual-left-bottom-element";
 import { individualLeftTopElement } from "@flixlix-cards/shared/components/individual-left-top-element";
 import { individualRightBottomElement } from "@flixlix-cards/shared/components/individual-right-bottom-element";
@@ -128,6 +129,7 @@ export class PowerFlowCardPlus extends LitElement {
         homeGridCircumference: number;
         homeUsageToDisplay: string;
         sortedIndividualObjects: IndividualObject[];
+        additionalIndividualObjects: IndividualObject[];
         individualFieldLeftTop?: IndividualObject;
         individualFieldLeftBottom?: IndividualObject;
         individualFieldRightTop?: IndividualObject;
@@ -366,6 +368,7 @@ export class PowerFlowCardPlus extends LitElement {
       home,
       nonFossil,
       individualObjs,
+      additionalIndividualObjects,
       newDur,
       templatesObj,
       homeBatteryCircumference,
@@ -498,6 +501,11 @@ export class PowerFlowCardPlus extends LitElement {
             solar,
           })}
         </div>
+        ${additionalIndividualObjects.length
+          ? individualDeviceArea({
+              individualObjs: additionalIndividualObjects,
+            })
+          : nothing}
         ${dashboardLinkElement(this._config, this.hass)}
       </ha-card>
     `;
@@ -1011,6 +1019,8 @@ export class PowerFlowCardPlus extends LitElement {
       maxVisibleIndividuals
     );
 
+    const additionalIndividualObjects =
+      filteredNotShownIndividualObjects.slice(maxVisibleIndividuals);
     const individualFieldLeftTop = getTopLeftIndividual(visibleIndividualObjects);
     const individualFieldLeftBottom = getBottomLeftIndividual(visibleIndividualObjects);
     const individualFieldRightTop = getTopRightIndividual(visibleIndividualObjects);
@@ -1054,6 +1064,7 @@ export class PowerFlowCardPlus extends LitElement {
       homeGridCircumference,
       homeUsageToDisplay,
       sortedIndividualObjects: visibleIndividualObjects,
+      additionalIndividualObjects,
       individualFieldLeftTop,
       individualFieldLeftBottom,
       individualFieldRightTop,
