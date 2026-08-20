@@ -5,34 +5,46 @@ import { ref } from "lit/directives/ref.js";
 import { type IndividualObject } from "@flixlix-cards/shared/states/raw/individual/get-individual-object";
 
 interface IndividualDeviceAreaProps {
+  hass: HomeAssistant;
   individualObjs: IndividualObject[];
 }
 
 const DEFAULT_INDIVIDUAL_CARD_TYPE = "tile" as const;
 
-type HassHost = HTMLElement & { hass?: HomeAssistant };
+const setTileCardConfig = (
+  element: Element | undefined,
+  hass: HomeAssistant,
+  individual: IndividualObject
+) => {
+  if (!element) return;
 
-const getHomeAssistant = (): HomeAssistant | undefined =>
-  (document.querySelector("home-assistant") as HassHost | null)?.hass;
+  const configure = () => {
+    const card = element as HTMLElement & {
+      hass?: HomeAssistant;
+      setConfig?: (config: Record<string, unknown>) => void;
+    };
 
-const setTileCardConfig = (element: Element | undefined, individual: IndividualObject) => {
-  if (!element || !("setConfig" in element)) return;
+    card.hass = hass;
+    card.setConfig?.({
+      type: DEFAULT_INDIVIDUAL_CARD_TYPE,
+      entity: individual.entity,
+      ...(individual.name ? { name: individual.name } : {}),
+      ...(individual.icon ? { icon: individual.icon } : {}),
+    });
+  };
 
-  (element as HTMLElement & { setConfig: (config: Record<string, unknown>) => void }).setConfig({
-    type: DEFAULT_INDIVIDUAL_CARD_TYPE,
-    entity: individual.entity,
-    ...(individual.name ? { name: individual.name } : {}),
-    ...(individual.icon ? { icon: individual.icon } : {}),
-  });
+  if (customElements.get("hui-tile-card")) {
+    configure();
+  } else {
+    void customElements.whenDefined("hui-tile-card").then(configure);
+  }
 };
 
 export const individualDeviceArea = ({
+  hass,
   individualObjs,
 }: IndividualDeviceAreaProps) => {
   if (!individualObjs.length) return html``;
-
-  const hass = getHomeAssistant();
-  if (!hass) return html``;
 
   return html`
     <div class="individual-device-area">
@@ -44,7 +56,7 @@ export const individualDeviceArea = ({
             <div class="individual-device-area-item">
               <hui-tile-card
                 .hass=${hass}
-                ${ref((element) => setTileCardConfig(element, individual))}
+                ${ref((element) => setTileCardConfig(element, hass, individual))}
               ></hui-tile-card>
             </div>
           `
