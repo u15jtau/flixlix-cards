@@ -5,18 +5,19 @@ import { ref } from "lit/directives/ref.js";
 import { type IndividualObject } from "@flixlix-cards/shared/states/raw/individual/get-individual-object";
 
 interface IndividualDeviceAreaProps {
-  hass: HomeAssistant;
   individualObjs: IndividualObject[];
 }
 
 const DEFAULT_INDIVIDUAL_CARD_TYPE = "tile" as const;
 
-const setTileCardConfig = (
-  element: Element | undefined,
-  hass: HomeAssistant,
-  individual: IndividualObject
-) => {
+const setTileCardConfig = (element: Element | undefined, individual: IndividualObject) => {
   if (!element) return;
+
+  const host = (element.getRootNode() as ShadowRoot | Document).host as
+    | (HTMLElement & { hass?: HomeAssistant })
+    | undefined;
+  const hass = host?.hass;
+  if (!hass) return;
 
   const configure = () => {
     const card = element as HTMLElement & {
@@ -41,7 +42,6 @@ const setTileCardConfig = (
 };
 
 export const individualDeviceArea = ({
-  hass,
   individualObjs,
 }: IndividualDeviceAreaProps) => {
   if (!individualObjs.length) return html``;
@@ -55,8 +55,7 @@ export const individualDeviceArea = ({
           (individual) => html`
             <div class="individual-device-area-item">
               <hui-tile-card
-                .hass=${hass}
-                ${ref((element) => setTileCardConfig(element, hass, individual))}
+                ${ref((element) => setTileCardConfig(element, individual))}
               ></hui-tile-card>
             </div>
           `
