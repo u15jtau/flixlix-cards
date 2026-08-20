@@ -1,4 +1,4 @@
-import { loadCardHelpers } from "custom-card-helpers";
+import { loadCardHelpers, type HomeAssistant } from "custom-card-helpers";
 import { html } from "lit";
 import { ref } from "lit/directives/ref.js";
 
