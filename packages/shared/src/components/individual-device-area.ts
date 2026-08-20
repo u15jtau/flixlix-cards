@@ -13,9 +13,10 @@ const DEFAULT_INDIVIDUAL_CARD_TYPE = "tile" as const;
 const setTileCardConfig = (element: Element | undefined, individual: IndividualObject) => {
   if (!element) return;
 
-  const host = (element.getRootNode() as ShadowRoot | Document).host as
-    | (HTMLElement & { hass?: HomeAssistant })
-    | undefined;
+  const root = element.getRootNode();
+  const host = root instanceof ShadowRoot
+    ? (root.host as HTMLElement & { hass?: HomeAssistant })
+    : undefined;
   const hass = host?.hass;
   if (!hass) return;
 
