@@ -1,8 +1,8 @@
-import { loadCardHelpers, type HomeAssistant } from "custom-card-helpers";
 import { html } from "lit";
 import { ref } from "lit/directives/ref.js";
 
 import { type IndividualObject } from "@flixlix-cards/shared/states/raw/individual/get-individual-object";
+import { type HomeAssistant } from "custom-card-helpers";
 
 interface IndividualDeviceAreaProps {
   individualObjs: IndividualObject[];
@@ -11,6 +11,10 @@ interface IndividualDeviceAreaProps {
 const DEFAULT_INDIVIDUAL_CARD_TYPE = "tile" as const;
 
 type HassHost = HTMLElement & { hass?: HomeAssistant };
+type ConfigurableCard = HTMLElement & {
+  hass?: HomeAssistant;
+  setConfig?: (config: Record<string, unknown>) => void;
+};
 
 const configureCard = async (element: Element | undefined, individual: IndividualObject) => {
   if (!element) return;
@@ -21,14 +25,17 @@ const configureCard = async (element: Element | undefined, individual: Individua
   const hass = (root.host as HassHost).hass;
   if (!hass) return;
 
-  const helpers = await loadCardHelpers();
-  const card = helpers.createCardElement({
+  await customElements.whenDefined("hui-tile-card");
+
+  const card = document.createElement("hui-tile-card") as ConfigurableCard;
+  if (!card.setConfig) return;
+
+  card.setConfig({
     type: DEFAULT_INDIVIDUAL_CARD_TYPE,
     entity: individual.entity,
     ...(individual.name ? { name: individual.name } : {}),
     ...(individual.icon ? { icon: individual.icon } : {}),
-  }) as HTMLElement & { hass?: HomeAssistant };
-
+  });
   card.hass = hass;
   element.replaceWith(card);
 };
