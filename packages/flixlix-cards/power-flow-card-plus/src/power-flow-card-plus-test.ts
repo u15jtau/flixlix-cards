@@ -1,14 +1,11 @@
 import { registerCustomCard } from "@flixlix-cards/shared/utils/register-custom-card";
 import packageJson from "../package.json" with { type: "json" };
+import "./ui-editor/ui-editor";
 import { PowerFlowCardPlus } from "./power-flow-card-plus";
 
 class PowerFlowCardPlusUnlimited extends PowerFlowCardPlus {
-  public override setConfig(config: any): void {
-    // Force the unlimited variant to always use the card area for individual devices.
-    super.setConfig({
-      ...config,
-      hide_individual_devices: true,
-    });
+  public static getConfigElement() {
+    return document.createElement("power-flow-card-plus-editor");
   }
 }
 
