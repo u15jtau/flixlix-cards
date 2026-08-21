@@ -1,6 +1,11 @@
 import { registerCustomCard } from "@flixlix-cards/shared/utils/register-custom-card";
 import packageJson from "../package.json" with { type: "json" };
+import "./ui-editor/ui-editor";
 import { PowerFlowCardPlus } from "./power-flow-card-plus";
+
+Object.assign(PowerFlowCardPlus, {
+  getConfigElement: () => document.createElement("power-flow-card-plus-editor"),
+});
 
 registerCustomCard({
   type: "power-flow-card-plus",
