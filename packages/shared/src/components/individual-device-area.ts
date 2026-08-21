@@ -91,7 +91,7 @@ export const individualDeviceArea = ({
   config,
   newDur,
 }: IndividualDeviceAreaProps) => {
-  if (!individualObjs.length) return html``;
+  if (!individualObjs.length || config.hide_individual_devices === true) return html``;
 
   const devicesPerColumn = Math.max(1, config.individual_devices_per_column ?? 4);
   const columns = Array.from(
@@ -101,11 +101,11 @@ export const individualDeviceArea = ({
   );
 
   return html`
-    <div class="individual-device-area">
+    <div class="individual-device-area" style="width:100%; margin:16px 0 0;">
       <svg class="individual-device-home-trunk" viewBox="0 0 180 100" preserveAspectRatio="none">
         <path d="M0 50 H180" />
       </svg>
-      <div class="individual-device-area-grid">
+      <div class="individual-device-area-grid" style="justify-content:flex-start;">
         ${columns.map(
           (column, columnIndex) => html`
             <div class="individual-device-column-group">
