@@ -59,6 +59,8 @@ export const cardConfigStruct = assign(
     }),
     sort_individual_devices: optional(boolean()),
     allow_layout_break: optional(boolean()),
+    individual_devices_per_column: optional(integer()),
+    hide_individual_devices: optional(boolean()),
 
     /* LEGACY - JUST TO AVOID ERRORS */
     watt_threshold: optional(number()),
