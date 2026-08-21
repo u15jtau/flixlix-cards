@@ -3,11 +3,7 @@ import packageJson from "../package.json" with { type: "json" };
 import "./ui-editor/ui-editor";
 import { PowerFlowCardPlus } from "./power-flow-card-plus";
 
-class PowerFlowCardPlusUnlimited extends PowerFlowCardPlus {
-  public static getConfigElement() {
-    return document.createElement("power-flow-card-plus-editor");
-  }
-}
+class PowerFlowCardPlusUnlimited extends PowerFlowCardPlus {}
 
 registerCustomCard({
   type: "power-flow-card-plus-test",
