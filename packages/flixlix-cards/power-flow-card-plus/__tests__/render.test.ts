@@ -5,6 +5,10 @@ import { describe, expect, test } from "vitest";
 import { type PowerFlowCardPlusConfig } from "@flixlix-cards/shared/types";
 import { PowerFlowCardPlus } from "../src/power-flow-card-plus";
 
+if (!customElements.get("power-flow-card-plus-test-fixture")) {
+  customElements.define("power-flow-card-plus-test-fixture", PowerFlowCardPlus);
+}
+
 // jsdom does not provide ResizeObserver; stub it so the card's `updated` hook doesn't throw
 (globalThis as any).ResizeObserver = class {
   observe() {}

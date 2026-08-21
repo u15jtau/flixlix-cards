@@ -37,6 +37,8 @@ interface mainConfigOptions {
   };
   sort_individual_devices?: boolean;
   allow_layout_break?: boolean;
+  individual_devices_per_column?: number;
+  hide_individual_devices?: boolean;
   /* LEGACY - JUST TO AVOID ERRORS */
   w_threshold?: number;
   w_decimals?: number;

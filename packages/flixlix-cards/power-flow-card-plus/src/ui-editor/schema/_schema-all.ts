@@ -235,6 +235,18 @@ export const advancedOptionsSchema = memoizeOne((localize, displayZeroLinesMode:
         label: "Allow Layout Break",
         selector: { boolean: {} },
       },
+      {
+        name: "individual_devices_per_column",
+        label: "Individual Devices Per Column",
+        selector: { number: { mode: "box", min: 1, max: 20, step: 1 } },
+        default: 4,
+      },
+      {
+        name: "hide_individual_devices",
+        label: "Hide Individual Flow Devices",
+        selector: { boolean: {} },
+        default: false,
+      },
     ],
   },
   {

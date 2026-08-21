@@ -213,6 +213,125 @@ export const styles = css`
   .circle-container .circle {
     cursor: var(--clickable-cursor);
   }
+  .individual-card-host {
+    width: 190px;
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .individual-card-host > * {
+    width: 100%;
+    max-width: 190px;
+  }
+  .individual-device-area {
+    display: block;
+    flex: 0 0 auto;
+    width: max-content;
+    max-width: none;
+    margin: 16px auto 0;
+    overflow: visible;
+    position: relative;
+  }
+  .individual-device-home-trunk {
+    position: absolute;
+    left: -180px;
+    top: 50%;
+    width: 180px;
+    height: 2px;
+    overflow: visible;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .individual-device-home-trunk path {
+    fill: none;
+    stroke: var(--energy-grid-return-color, #d34a4a);
+    stroke-width: 1.5;
+  }
+  .individual-device-area-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
+  .individual-device-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+    width: max-content;
+    max-width: none;
+    margin: 0;
+  }
+
+  .individual-device-column {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 0 0 254px;
+    min-width: 254px;
+  }
+  .individual-device-column-group {
+    display: flex;
+    align-items: center;
+    flex: 0 0 286px;
+    min-width: 286px;
+  }
+  .individual-device-column-group + .individual-device-column-group {
+    margin-left: 24px;
+  }
+  .individual-device-column-branch {
+    width: 32px;
+    align-self: stretch;
+    position: relative;
+  }
+  .individual-device-column-branch svg {
+    display: none;
+  }
+  .individual-device-column-branch::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-top: 2px dashed var(--energy-grid-return-color, #d34a4a);
+  }
+  .individual-device-column-branch path,
+  .individual-device-home-link path {
+    fill: none;
+    stroke: var(--energy-grid-return-color, #d34a4a);
+    stroke-width: 1.5;
+  }
+  .individual-device-area-item {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 64px 190px;
+    grid-template-rows: auto;
+    align-items: center;
+  }
+  .individual-device-home-link {
+    width: 64px;
+    height: 56px;
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .individual-device-column::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 28px;
+    bottom: 28px;
+    border-left: 2px solid var(--energy-grid-return-color, #d34a4a);
+  }
+  .individual-device-area-item .individual-card-host {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .individual-device-flow-dot {
+    fill: var(--individual-left-top-color);
+  }
   #battery-grid {
     stroke: var(--battery-grid-line);
   }

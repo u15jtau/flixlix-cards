@@ -1,6 +1,6 @@
 import { createCardConfig } from "@flixlix-cards/bundler";
 
 export default createCardConfig({
-  input: "src/power-flow-card-plus-entry.ts",
+  input: "src/power-flow-card-plus-test.ts",
   outDir: "dist",
 });

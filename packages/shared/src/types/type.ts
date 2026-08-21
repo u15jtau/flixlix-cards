@@ -1,4 +1,7 @@
-import { type ActionConfig, type HomeAssistant } from "custom-card-helpers";
+import {
+  type ActionConfig,
+  type HomeAssistant,
+} from "custom-card-helpers";
 import { type TemplateResult } from "lit";
 
 export type ActionConfigSet = {
@@ -76,6 +79,11 @@ export type GridPowerOutage = {
 
 export type IndividualDeviceType = BaseConfigEntity & {
   entity: string;
+  card?: LovelaceCardConfig;
+  card_type?: string;
+  card_entity?: string;
+  card_name?: string;
+  card_icon?: string;
   color?: string;
   color_icon?: boolean;
   inverted_animation?: boolean;

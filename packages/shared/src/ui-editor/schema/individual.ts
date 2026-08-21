@@ -78,6 +78,26 @@ export const individualSchema = [
     name: "entity",
     selector: { entity: {} },
   },
+  {
+    name: "card_type",
+    label: "Embedded Card Type",
+    selector: { text: {} },
+  },
+  {
+    name: "card_entity",
+    label: "Embedded Card Entity",
+    selector: { entity: {} },
+  },
+  {
+    name: "card_name",
+    label: "Embedded Card Name",
+    selector: { text: {} },
+  },
+  {
+    name: "card_icon",
+    label: "Embedded Card Icon",
+    selector: { icon: {} },
+  },
   mainSchema,
   {
     name: "color",
@@ -95,5 +115,38 @@ export const individualSchema = [
     name: "",
     type: "expandable",
     schema: actionSchema,
+  },
+  {
+    title: "Embedded Card",
+    name: "card",
+    type: "expandable",
+    schema: [
+      {
+        name: "type",
+        label: "Card Type",
+        selector: { text: {} },
+      },
+      {
+        name: "entity",
+        label: "Card Entity",
+        selector: { entity: {} },
+      },
+      {
+        name: "name",
+        label: "Card Name",
+        selector: { text: {} },
+      },
+      {
+        name: "icon",
+        label: "Card Icon",
+        selector: { icon: {} },
+      },
+      {
+        title: "Card Actions",
+        name: "",
+        type: "expandable",
+        schema: actionSchema,
+      },
+    ],
   },
 ] as const;
